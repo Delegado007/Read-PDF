@@ -54,5 +54,4 @@ async function CreatePng(libros) {
   }
   console.log(libros);
 }
-
 module.exports = { CreatePng };
