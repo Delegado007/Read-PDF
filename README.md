@@ -1,4 +1,3 @@
-
 # Lectura Recursiva de PDF y conertidor a PNG
 
 El proposito de este repositorio es lograr recorrer carpetas del sistema y ir identificando cuales archivos son del tipo PDF.
@@ -20,6 +19,40 @@ const lecturaRecursiva = async () => {
   })) {
     //push al array del archivo localizado
     array.push({ ruta: entry.fullPath, pages: "", fileName: entry.basename, size: entry.stats.size });
+  }
+  return array;
+}
+```
+
+
+## Contabilizar páginas de los PDFs
+
+Con el array de salida podemos recorrerlo y sacar el número de páginas que tiene cada archivo.
+Usando pdfjs-dist
+
+```bash
+  npm i pdfjs-dist
+```
+Debe recibir un array con las rutas de los PDF a analizar
+
+```javascript
+const pdfjsLib = require("pdfjs-dist/legacy/build/pdf.js");
+
+async function loadPagesPdf(array) {
+  for (let index = 0; index < array.length; index++) {
+    const pdfPath = array[index].ruta;
+    const loadingTask = await pdfjsLib.getDocument(pdfPath);
+    try {
+      const pdfDocument = await loadingTask.promise;
+      const numPages = pdfDocument.numPages;
+      array[index] = {
+        ...array[index],
+        pages: numPages
+      }
+    } catch (error) {
+      console.log(`ERROR en la RUTA: ${array[index].ruta}`)
+      console.error(error.message)
+    }
   }
   return array;
 }
