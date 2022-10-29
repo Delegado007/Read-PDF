@@ -5,7 +5,6 @@ let datos = [];
 let datosSinFallos = [];
 let datosConFallos = [];
 
-
 async function loadPagesPdf(data) {
   for (let index = 0; index < data.length; index++) {
     const pdfPath = data[index].ruta;
@@ -14,9 +13,7 @@ async function loadPagesPdf(data) {
       const pdfDocument = await loadingTask.promise;
       const numPages = pdfDocument.numPages;
       datosSinFallos.push({ ...data[index], "pages": numPages })
-
     } catch (error) {
-
       datosConFallos.push(data[index])
       console.log(`ERROR en la RUTA: ${data[index].ruta}`)
       console.error(error.message)
@@ -29,7 +26,6 @@ async function loadPagesPdf(data) {
 }
 
 const lecturaRecursiva = async () => {
-
   for await (const entry of readdirp("C:/Users", {
     fileFilter: "*.pdf",
     directoryFilter: ['!.git', '!node_modules'],
@@ -46,5 +42,3 @@ module.exports = {
   lecturaRecursiva,
   loadPagesPdf,
 }
-
-
