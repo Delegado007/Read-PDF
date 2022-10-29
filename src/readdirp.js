@@ -1,38 +1,45 @@
 const readdirp = require("readdirp");
 const pdfjsLib = require("pdfjs-dist/legacy/build/pdf.js");
-const { CreatePng } = require("./toPng");
 
-let array = [];
+let datos = [];
+let datosSinFallos = [];
+let datosConFallos = [];
 
-async function loadPagesPdf(array) {
-  for (let index = 0; index < array.length; index++) {
-    const pdfPath = array[index].ruta;
+
+async function loadPagesPdf(data) {
+  for (let index = 0; index < data.length; index++) {
+    const pdfPath = data[index].ruta;
     const loadingTask = await pdfjsLib.getDocument(pdfPath);
     try {
       const pdfDocument = await loadingTask.promise;
       const numPages = pdfDocument.numPages;
-      array[index] = {
-        ...array[index],
-        pages: numPages
-      }
+      datosSinFallos.push({ ...data[index], "pages": numPages })
+
     } catch (error) {
-      console.log(`ERROR en la RUTA: ${array[index].ruta}`)
+
+      datosConFallos.push(data[index])
+      console.log(`ERROR en la RUTA: ${data[index].ruta}`)
       console.error(error.message)
     }
   }
-
-  return array;
+  return {
+    datosSinFallos,
+    datosConFallos
+  };
 }
 
 const lecturaRecursiva = async () => {
+
   for await (const entry of readdirp("C:/Users", {
     fileFilter: "*.pdf",
     directoryFilter: ['!.git', '!node_modules'],
     alwaysStat: true,
   })) {
-    array.push({ ruta: entry.fullPath, pages: "", fileName: entry.basename, size: entry.stats.size });
+    let sizeInteger = Number(entry.stats.size)
+    let size = Math.trunc(sizeInteger / (1024))
+    datos.push({ "ruta": entry.fullPath, "pages": "", "fileName": entry.basename, "size": size });
   }
-  return array
+  return datos
 }
 
 module.exports = {
