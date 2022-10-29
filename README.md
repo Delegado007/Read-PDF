@@ -1,8 +1,8 @@
-# Lectura Recursiva de PDF y conertidor a PNG
+# Lectura recursiva de PDF y convertidor a PNG
 
-El proposito de este repositorio es lograr recorrer carpetas del sistema y ir identificando cuales archivos son del tipo PDF.
+El propósito de éste repositorio es lograr recorrer carpetas del sistema y ir identificando cuales archivos son del tipo PDF.
 
-Una vez identificados los mismo seran agregados a un array para su analisis en cuanto accesibilidad y propiedades como tamaño y cantidad de carillas.
+Una vez identificados los mismos serán agregados a un array para su análisis en cuanto accesibilidad y propiedades como el tamaño, nombre, ruta y cantidad de carillas.
 
 ## Lectura recursiva
 
@@ -67,7 +67,7 @@ async function loadPagesPdf(data) {
 }
 ```
 
-## Convirtiendo la primera pagina del pdf a png
+## Convirtiendo la primera página del pdf a png
 
 Para ello vamos a necesitar tener instalado en nuestra PC el software [GraphicsMagick](http://www.graphicsmagick.org/download.html#download-sites).
 Y también demos tener instalado el siguiente paquete:
