@@ -69,7 +69,7 @@ async function loadPagesPdf(data) {
 
 ## Convirtiendo la primera pagina del pdf a png
 
-Para ello vamos a necesitar tener instalado en nuestra PC [GraphicsMagick](http://www.graphicsmagick.org/download.html#download-sites)
+Para ello vamos a necesitar tener instalado en nuestra PC el software [GraphicsMagick](http://www.graphicsmagick.org/download.html#download-sites).
 Y también demos tener instalado el siguiente paquete:
 
 ```bash
